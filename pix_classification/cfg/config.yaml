@@ -1,0 +1,27 @@
+# dataset
+train_data: '/mnt/hdd1/datasets/hyperspectral/hyper_penguin/pixelwisePenguinIdDataset/white_5mean_10pen/train.json'
+validation_data: ''
+test_data: '/mnt/hdd1/datasets/hyperspectral/hyper_penguin/pixelwisePenguinIdDataset/white_5mean_10pen/test.json'
+
+meta_data: False
+
+# train
+batch_size: 128
+
+train_parameter:
+  epochs: 300
+  lr: 0.001
+  scheduler_gamma: 0.6
+
+
+# model
+input_dim: 151
+output_dim: 10
+dropout_prob: 0.5
+
+# device
+device: 'cuda:0'
+data_parallel: False
+
+# aug
+aug_beta: False
