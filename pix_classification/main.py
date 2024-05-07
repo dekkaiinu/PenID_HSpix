@@ -17,12 +17,11 @@ from models.mlp_batch_norm import MLP_BatchNotm
 
 @hydra.main(version_base=None, config_path='cfg', config_name='config')
 def main(cfg: DictConfig):
-    training_dataset = HsPixelDataset(root=cfg.train_data, meta_data=cfg.meta_data, aug_beta=cfg.aug_beta)
-    # training_dataset = DataLoader(training_dataset, batch_size=cfg.batch_size, shuffle=True, collate_fn=training_dataset.collate_fn, num_workers=min(40, cfg.batch_size), pin_memory=True, prefetch_factor=10)
-    training_dataset = DataLoader(training_dataset, batch_size=cfg.batch_size, shuffle=True, num_workers=24, pin_memory=True, prefetch_factor=10)
+    training_dataset = HsPixelDataset(feature_path='../dataset/train_feature.npy', target_path='../dataset/train_target.npy')
+    training_dataset = DataLoader(training_dataset, batch_size=cfg.batch_size, shuffle=True, num_workers=20, pin_memory=True, prefetch_factor=10)
 
-    test_dataset = HsPixelDataset(root=cfg.test_data, meta_data=cfg.meta_data)
-    test_dataset = DataLoader(test_dataset, batch_size=cfg.batch_size, shuffle=False, num_workers=24, pin_memory=True, prefetch_factor=10)
+    test_dataset = HsPixelDataset(feature_path='../dataset/validation_feature.npy', target_path='../dataset/validation_target.npy')
+    test_dataset = DataLoader(test_dataset, batch_size=cfg.batch_size, shuffle=False, num_workers=20, pin_memory=True, prefetch_factor=10)
 
     # Init model
     model = MLP_BatchNotm(input_dim=cfg.input_dim, output_dim=cfg.output_dim, dropout_prob=cfg.dropout_prob)
