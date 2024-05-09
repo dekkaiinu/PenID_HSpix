@@ -13,7 +13,7 @@ class HsPixelDataset(data.Dataset):
     '''
     
     '''
-    def __init__(self, feature_path: Union[str, Path], target_path: Union[str, Path], meta_data: bool = False, random_seed: int = 0, aug_beta = False):
+    def __init__(self, feature_path: Union[str, Path], target_path: Union[str, Path]):
         super().__init__()
         self.feature = np.load(feature_path)
         print(self.feature.shape)
@@ -26,7 +26,7 @@ class HsPixelDataset(data.Dataset):
         '''
         hs_pixel, target = self.feature[index, :], np.array(self.target[index])
 
-        hs_pixel = torch.from_numpy(hs_pixel / 4095).type(torch.float32)
+        hs_pixel = torch.from_numpy(hs_pixel / 4095).type(torch.FloatTensor)
         target = torch.from_numpy(target).type(torch.LongTensor)
 
         return hs_pixel, target

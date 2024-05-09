@@ -1,0 +1,4 @@
+dataset/*.npy
+
+pix_classification/outputs
+pix_classification/runs
