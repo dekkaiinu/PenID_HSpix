@@ -15,7 +15,6 @@ class MLP_BatchNotm(nn.Module):
         self.fc4 = nn.Linear(64, output_dim)
 
     def forward(self, x):
-        x = x.to(torch.float32)
         x = torch.relu(self.bn1(self.fc1(x)))
         x = torch.relu(self.bn2(self.fc2(x)))
         x = self.dropout2(x)
