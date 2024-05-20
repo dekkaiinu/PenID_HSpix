@@ -1,13 +1,8 @@
-# dataset
-
-# train
 batch_size: 128
-
 train_parameter:
   epochs: 500
   lr: 0.001
   scheduler_gamma: 0.6
-
 
 # model
 input_dim: 151
@@ -16,3 +11,6 @@ dropout_prob: 0.5
 
 # device
 device: 'cuda:0'
+
+model_path: 'runs/<date>/<time>/weight.pt'
+

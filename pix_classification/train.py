@@ -12,17 +12,15 @@ from models.mlp_batch_norm import MLP_BatchNotm
 from utils.create_runs_folder import *
 
 @hydra.main(version_base=None, config_path='cfg', config_name='config')
-def main(cfg: DictConfig):
-    training_dataset = HsPixelDataset(feature_path='../dataset/train_feature5.npy', target_path='../dataset/train_target5.npy')
+def train(cfg: DictConfig):
+    training_dataset = HsPixelDataset(feature_path='../dataset/train_feature_rgb.npy', target_path='../dataset/train_target_rgb.npy')
     training_dataset = DataLoader(training_dataset, batch_size=cfg.batch_size, shuffle=True)
 
-    test_dataset = HsPixelDataset(feature_path='../dataset/validation_feature5.npy', target_path='../dataset/validation_target5.npy')
+    test_dataset = HsPixelDataset(feature_path='../dataset/validation_feature_rgb.npy', target_path='../dataset/validation_target_rgb.npy')
     test_dataset = DataLoader(test_dataset, batch_size=cfg.batch_size, shuffle=True)
 
     # Init model
     model = MLP_BatchNotm(input_dim=cfg.input_dim, output_dim=cfg.output_dim, dropout_prob=cfg.dropout_prob)
-    # Print number of parameters
-    print("# parameters", sum([p.numel() for p in model.parameters()]))
     # Model to device
     model.to(cfg.device)
     # Init optimizer
@@ -45,6 +43,5 @@ def main(cfg: DictConfig):
     save_path = create_runs_folder()
     model_wrapper.training_process(epochs=cfg.train_parameter.epochs, save_path=save_path)
 
-
-if __name__ == '__main__':
-    main()
+if __name__=='__main__':
+    train()

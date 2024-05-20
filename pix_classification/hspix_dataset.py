@@ -27,6 +27,7 @@ class HsPixelDataset(data.Dataset):
         hs_pixel, target = self.feature[index, :], np.array(self.target[index])
 
         hs_pixel = torch.from_numpy(hs_pixel / 4095).type(torch.FloatTensor)
+
         target = torch.from_numpy(target).type(torch.LongTensor)
 
         return hs_pixel, target

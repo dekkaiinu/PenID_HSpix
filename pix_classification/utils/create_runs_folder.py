@@ -16,6 +16,4 @@ def create_runs_folder():
         os.makedirs(time_folder_path + "/train")
     if not os.path.exists(time_folder_path + "/val"):
         os.makedirs(time_folder_path + "/val")
-    if not os.path.exists(time_folder_path + "/test"):
-        os.makedirs(time_folder_path + "/test")
     return time_folder_path

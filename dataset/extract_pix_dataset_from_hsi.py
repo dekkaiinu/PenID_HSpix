@@ -8,9 +8,9 @@ from hsitools.convert import nh9_to_array
 from hsitools.correction import hsi_blur
 from sklearn.mixture import GaussianMixture
 
-LOAD_PATH = '/mnt/hdd1/datasets/hyperspectral/hyper_penguin/HSpenguins'
+LOAD_PATH = '/mnt/hdd_vcml/hyper_penguin'
 
-def generate_dataset():
+def extract_pix_dataset_from_hsi():
     category = ['0373', '0143', '0346', '0166', '1556', '0566', '0126', '0473', '0456', '0146']
     date = ['20230623', '20230627']
     dataset = load_dataset(date_list=date, pen_id_list=category)
@@ -31,19 +31,16 @@ def generate_dataset():
     print(val_spectrum_array.shape)
     print(val_target.shape)
 
-    np.save('train_feature5.npy', train_spectrum_array)
-    np.save('train_target5.npy', train_target)
-    np.save('test_feature5.npy', test_spectrum_array)
-    np.save('test_target5.npy', test_target)
-    np.save('validation_feature5.npy', val_spectrum_array)
-    np.save('validation_target5.npy', val_target)
+    np.savez('/mnt/hdd1/youta/hyper_penguin_pix/data/train/data.npz', features=train_spectrum_array, targets=train_target)
+    np.savez('/mnt/hdd1/youta/hyper_penguin_pix/data/train/data.npz', features=test_spectrum_array, targets=test_target)
+    np.savez('/mnt/hdd1/youta/hyper_penguin_pix/data/train/data.npz', features=val_spectrum_array, targets=val_target)
 
 
 def load_dataset(date_list, pen_id_list):
-    with open(os.path.join(LOAD_PATH, 'images', 'images.json'), 'r') as file:
-        hsi_informations = json.load(file)
+    with open(os.path.join(LOAD_PATH, 'hyper_penguin.json'), 'r') as file:
+        dataset_informations = json.load(file)
     
-    mask_file_list = os.listdir(os.path.join(LOAD_PATH, 'anotation', 'mask_images'))
+    # mask_file_list = os.listdir(os.path.join(LOAD_PATH, 'segmentation_mask'))
 
     skipline_mask_img = np.zeros((1080, 2048), dtype=np.uint8)
     for y in range(1080):
@@ -51,29 +48,24 @@ def load_dataset(date_list, pen_id_list):
             skipline_mask_img[y, x] = 255
 
     dataset = []
-    for hsi_information in tqdm(hsi_informations):
+    for hsi_information in tqdm(dataset_informations):
         img_id = hsi_information['image_id']
-        date = hsi_information['date']
+        meta_data = hsi_information['meta_data']
+        date = meta_data['date']
         if not (date in date_list):
             continue
-        hsi = nh9_to_array(os.path.join(LOAD_PATH, 'images', 'HS', img_id + '.nh9'), 
-                           height=1080, width=2048, spectral_dimension=151)
+        hsi = np.load(os.path.join(LOAD_PATH, 'image', 'HS', img_id + '.npy'))
         penguins_data = []
-        for mask_file in mask_file_list:
-            if (mask_file == 'white') or (mask_file == 'black') or (mask_file == 'mask_images.json'):
-                continue
-            mask_id = mask_file.split('.')[0]
-            pen_id = mask_id.split('_')[1]
-            if (pen_id in pen_id_list) and (img_id == mask_id.split('_')[0]):
-                mask_img = cv2.imread(os.path.join(LOAD_PATH, 'anotation', 'mask_images', mask_id + '.png'), cv2.COLOR_BGR2GRAY)
+        for ann_information in hsi_information['annotation']:
+            pen_id = ann_information['penguin_id']
+            if pen_id in pen_id_list:
+                mask_img = cv2.imread(os.path.join(LOAD_PATH, 'segmentation_mask', ann_information['segmentation_mask']), cv2.COLOR_BGR2GRAY)
                 mask_img = cv2.erode(mask_img, np.ones((3, 3), np.uint8), iterations=3)
 
                 smooth_hsi = hsi_blur(hsi=hsi)
                 pen_spectrum = hsi[(mask_img == 255) & (skipline_mask_img == 255)]
                 smooth_spectrum = smooth_hsi[(mask_img == 255) & (skipline_mask_img == 255)]
                 pen_spectrum = pick_white_area(pen_spectrum, smooth_spectrum)
-                # pen_spectrum = noise_ref(spectrum=pen_spectrum, pix_num=5)
-                # print(pen_spectrum.shape)
                 pen_id_index = [pen_id_list.index(pen_id)]
                 
                 penguin_data = {'spectrum': pen_spectrum, 'pen_id': pen_id_index}
@@ -170,4 +162,4 @@ def sampling_data(features, labels, target_count, random_seed=0):
 
 
 if __name__ == '__main__':
-    generate_dataset()
+    extract_pix_dataset_from_hsi()
