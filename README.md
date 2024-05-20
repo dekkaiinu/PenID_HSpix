@@ -46,7 +46,11 @@ comming soon
 
 ## License
 
-This project is licensed under the Creative Commons Attribution Non Commercial 4.0 International License - see the [LICENSE](https://creativecommons.org/licenses/by-nc/4.0/) file for details.
+This project is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivatives (CC BY-NC-ND) 4.0 International License](./LICENSE-CC-BY-NC-ND-4.0.md).
+
+Choose this license if you want to permit others to share (mirror) your mod content, providing that they credit you and don't use your work for commercial purposes.
+
+You can view additional details on [this page](https://creativecommons.org/licenses/by-nc-nd/4.0/), which you should link to in your readme.
 
 ## Contact
 
