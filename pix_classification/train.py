@@ -1,9 +1,9 @@
 from omegaconf import DictConfig, OmegaConf
 import hydra
-from datasets import load_dataset
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
+from datasets import load_dataset
 
 from hspix_dataset import HsPixelDataset
 
@@ -14,13 +14,16 @@ from utils.create_runs_folder import *
 
 @hydra.main(version_base=None, config_path='cfg', config_name='config')
 def train(cfg: DictConfig):
+    # Load dataset from here [https://huggingface.co/datasets/dekkaiinu/hyper_penguin_pix/tree/main]
     dataset = load_dataset('dekkaiinu/hyper_penguin_pix', trust_remote_code=True)
     
+    # Create dataset
     training_dataset = HsPixelDataset(feature=dataset['train']['feature'], target=dataset['train']['target'])
     training_dataset = DataLoader(training_dataset, batch_size=cfg.batch_size, shuffle=True)
 
     validation_dataset = HsPixelDataset(feature=dataset['validation']['feature'], target=dataset['validation']['target'])
     validation_dataset = DataLoader(validation_dataset, batch_size=cfg.batch_size, shuffle=True)
+
 
     # Init model
     model = MLP_BatchNotm(input_dim=cfg.input_dim, output_dim=cfg.output_dim, dropout_prob=cfg.dropout_prob)

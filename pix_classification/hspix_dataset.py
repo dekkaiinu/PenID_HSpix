@@ -1,17 +1,14 @@
-import os.path
-import json
-import random
-from pathlib import Path
-from typing import Any, Callable, Optional, Tuple, Union
-
-import numpy as np
+from typing import Any, Tuple
 import torch
 import torch.utils.data as data
-from sklearn.preprocessing import LabelEncoder
 
 class HsPixelDataset(data.Dataset):
     '''
+    HsPixelDataset is a custom dataset class for handling hyperspectral pixel data.
     
+    Attributes:
+        feature (Any): The input features for the dataset.
+        target (Any): The target labels for the dataset.
     '''
     def __init__(self, feature, target):
         super().__init__()
