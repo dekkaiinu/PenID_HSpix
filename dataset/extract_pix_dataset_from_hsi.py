@@ -32,8 +32,8 @@ def extract_pix_dataset_from_hsi():
     print(val_target.shape)
 
     np.savez('/mnt/hdd1/youta/hyper_penguin_pix/data/train/data.npz', features=train_spectrum_array, targets=train_target)
-    np.savez('/mnt/hdd1/youta/hyper_penguin_pix/data/train/data.npz', features=test_spectrum_array, targets=test_target)
-    np.savez('/mnt/hdd1/youta/hyper_penguin_pix/data/train/data.npz', features=val_spectrum_array, targets=val_target)
+    np.savez('/mnt/hdd1/youta/hyper_penguin_pix/data/test/data.npz', features=test_spectrum_array, targets=test_target)
+    np.savez('/mnt/hdd1/youta/hyper_penguin_pix/data/validation/data.npz', features=val_spectrum_array, targets=val_target)
 
 
 def load_dataset(date_list, pen_id_list):
