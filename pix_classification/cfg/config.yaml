@@ -1,6 +1,6 @@
 batch_size: 128
 train_parameter:
-  epochs: 500
+  epochs: 300
   lr: 0.001
   scheduler_gamma: 0.6
 

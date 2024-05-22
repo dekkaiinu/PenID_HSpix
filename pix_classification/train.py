@@ -1,5 +1,6 @@
 from omegaconf import DictConfig, OmegaConf
 import hydra
+from datasets import load_dataset
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -13,11 +14,13 @@ from utils.create_runs_folder import *
 
 @hydra.main(version_base=None, config_path='cfg', config_name='config')
 def train(cfg: DictConfig):
-    training_dataset = HsPixelDataset(feature_path='../dataset/train_feature_rgb.npy', target_path='../dataset/train_target_rgb.npy')
+    dataset = load_dataset('dekkaiinu/hyper_penguin_pix', trust_remote_code=True)
+    
+    training_dataset = HsPixelDataset(feature=dataset['train']['feature'], target=dataset['train']['target'])
     training_dataset = DataLoader(training_dataset, batch_size=cfg.batch_size, shuffle=True)
 
-    test_dataset = HsPixelDataset(feature_path='../dataset/validation_feature_rgb.npy', target_path='../dataset/validation_target_rgb.npy')
-    test_dataset = DataLoader(test_dataset, batch_size=cfg.batch_size, shuffle=True)
+    validation_dataset = HsPixelDataset(feature=dataset['validation']['feature'], target=dataset['validation']['target'])
+    validation_dataset = DataLoader(validation_dataset, batch_size=cfg.batch_size, shuffle=True)
 
     # Init model
     model = MLP_BatchNotm(input_dim=cfg.input_dim, output_dim=cfg.output_dim, dropout_prob=cfg.dropout_prob)
@@ -36,7 +39,7 @@ def train(cfg: DictConfig):
                                  optimizer=optimizer,
                                  loss_function=loss_function,
                                  training_dataset=training_dataset,
-                                 test_dataset=test_dataset,
+                                 test_dataset=validation_dataset,
                                  lr_schedule=lr_schedule,
                                  device=cfg.device)
     # Perform training

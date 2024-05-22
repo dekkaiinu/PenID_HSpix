@@ -13,24 +13,21 @@ class HsPixelDataset(data.Dataset):
     '''
     
     '''
-    def __init__(self, feature_path: Union[str, Path], target_path: Union[str, Path]):
+    def __init__(self, feature, target):
         super().__init__()
-        self.feature = np.load(feature_path)
-        print(self.feature.shape)
-        self.target = np.load(target_path)
-        print(self.target.shape)
+        self.feature = feature
+        self.target = target
 
 
     def __getitem__(self, index: int) -> Tuple[Any, Any]:
         '''
         '''
-        hs_pixel, target = self.feature[index, :], np.array(self.target[index])
+        hs_pixel, target = self.feature[index], self.target[index]
 
-        hs_pixel = torch.from_numpy(hs_pixel / 4095).type(torch.FloatTensor)
-
-        target = torch.from_numpy(target).type(torch.LongTensor)
-
+        hs_pixel = torch.tensor(hs_pixel, dtype=torch.float32) / 4095
+        target = torch.tensor(target, dtype=torch.long)
+    
         return hs_pixel, target
 
     def __len__(self) -> int:
-        return self.target.shape[0]
+        return len(self.target)
