@@ -29,14 +29,16 @@ You may need to adjust the `torch` and `torchvision` versions in the `pyproject.
 To run the experiments, execute:
 1. To train the model, run the following command from the project root:
 ```
-python pix_classification/train.py
+cd pix_classification
+python train.py
 ```
 This will start the training process as configured in your `config.yaml` file under the `cfg` directory. 
 The weights and training logs will be saved in `runs/<date>/weight.pt`, where `<date>` is the timestamp of the training session.
 
 2. To test the model, execute:
 ```
-python pix_classification/test.py --model_path <model_path>
+cd pix_classification
+python test.py --model_path <model_path>
 ```
 Ensure that the model weights (`weight.pt`) and configuration used for testing match those used during training. 
 Specify the path to the weights as needed in the testing script.
