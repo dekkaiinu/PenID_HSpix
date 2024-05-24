@@ -1,8 +1,17 @@
 # Hyperspectral Image Dataset for Individual Penguin Identification
+  <p align="center">
+    <a href='https://arxiv.org/abs/2405.14146'>
+      <img src='https://img.shields.io/badge/arXiv-2405.14146-b31b1b.svg' alt='arXiv PDF'>
+    </a>
+    <a href='https://033labcodes.github.io/igrass24_penguin/'>
+      <img src='https://img.shields.io/badge/Project-Page-blue?style=flat&logo=webpack' alt='Project Page'>
+    </a>
+    <a href='https://huggingface.co/datasets/dekkaiinu/hyper_penguin_pix'>
+      <img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Dataset-blue' alt='HuggingFace'>
+    </a>
+  </p>
 
-
-
-This repository contains the experimental code for the paper accepted at IGARSS2024. The purpose of this code is to provide a reference for the methods and results discussed in the paper.
+This repository is an official implementation of the paper "Hyperspectral Image Dataset for Individual Penguin Identification" accepted to IGARSS2024.
 
 ## Installation
 
