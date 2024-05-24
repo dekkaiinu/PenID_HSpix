@@ -41,7 +41,14 @@ Additionally, this hyperspectral pixel dataset was extracted from the [hyperspec
 ## Citation
 
 ```
-comming soon
+@misc{noboru2024hyperspectral,
+      title={Hyperspectral Image Dataset for Individual Penguin Identification}, 
+      author={Youta Noboru and Yuko Ozasa and Masayuki Tanaka},
+      year={2024},
+      eprint={2405.14146},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 ```
 
 ## License
