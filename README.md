@@ -30,7 +30,7 @@ To run the experiments, execute:
 1. To train the model, run the following command from the project root:
 ```
 cd pix_classification
-python train.py
+poetry run python train.py
 ```
 This will start the training process as configured in your `config.yaml` file under the `cfg` directory. 
 The weights and training logs will be saved in `runs/<date>/weight.pt`, where `<date>` is the timestamp of the training session.
@@ -38,7 +38,7 @@ The weights and training logs will be saved in `runs/<date>/weight.pt`, where `<
 2. To test the model, execute:
 ```
 cd pix_classification
-python test.py --model_path <model_path>
+poetry run python test.py --model_path <model_path>
 ```
 Ensure that the model weights (`weight.pt`) and configuration used for testing match those used during training. 
 Specify the path to the weights as needed in the testing script.
