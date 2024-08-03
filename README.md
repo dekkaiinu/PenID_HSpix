@@ -47,7 +47,7 @@ Specify the path to the weights as needed in the testing script.
 
 This project utilizes datasets uploaded on Hugging Face. The primary dataset used can be found [here](https://huggingface.co/datasets/dekkaiinu/hyper_penguin_pix).
 
-Additionally, this hyperspectral pixel dataset was extracted from the [hyperspectral image dataset](https://huggingface.co/datasets/dekkaiinu/hyper_penguin) using the script located at `dataset/extract_pix_dataset_from_hsi.py`.
+Additionally, this hyperspectral pixel dataset was extracted from the [hyperspectral image dataset](https://tdu.box.com/s/e96lruwtq18b197a46ws5wv7kcg5g8ew).
 
 ## Citation
 
